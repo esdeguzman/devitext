@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devitext</title>
+    <link rel="icon" href="favicon-96x96.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div id="app">
+        <section class="hero is-link">
+            <div class="hero-body">
+              <p class="title">
+                Devitext
+              </p>
+              <p class="subtitle">
+                Text base Devikin search for your quick NFT view.
+              </p>
+              <input type="text" class="input" placeholder="Type Devikin ID here" v-model="devikinId">
+              <button class="button mt-2" @click="search">Search</button>
+            </div>
+          </section>
+          <div class="container p-2 mb-5 mt-5">
+              <div class="columns">
+                  <div class="column">
+                      <ul>
+                          <li class="li-header">
+                              <span class="subtitle is-size-4">Basic Information</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Rarity: </span>
+                              <span class="subtitle is-size-4">{{ devikinBasicInformation.rarity? devikinBasicInformation.rarity : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Personality: </span>
+                              <span class="subtitle is-size-4">{{ devikinBasicInformation.personality? devikinBasicInformation.personality : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Ancestry: </span>
+                              <span class="subtitle is-size-4">{{ devikinBasicInformation.ancestry? devikinBasicInformation.ancestry : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Life Stage: </span>
+                              <span class="subtitle is-size-4">{{ devikinBasicInformation.lifeStage? devikinBasicInformation.lifeStage : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Bonded: </span>
+                              <span class="subtitle is-size-4">{{ devikinBasicInformation.bonded? devikinBasicInformation.bonded : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Is Hardminted: </span>
+                              <span class="subtitle is-size-4">{{ devikinBasicInformation.isHardminted? devikinBasicInformation.isHardminted : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Has Limited Hat: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? getDevikinLimitedHat() : '???' }}</span>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="column">
+                      <ul>
+                          <li class="li-header">
+                              <span class="subtitle is-size-4">Genes</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Mouth: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? getDevikinGene('Mouth') : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Eyes: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? getDevikinGene('Eyes') : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Ears: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? getDevikinGene('Ears') : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Hair: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? getDevikinGene('Hair') : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Horns: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? getDevikinGene('Horns') : '???' }}</span>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="column">
+                      <ul>
+                          <li class="li-header">
+                              <span class="subtitle is-size-4">Affinities</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Vitality: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? devikinData.VitAffinity : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Power: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? devikinData.PowAffinity : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Fortitude: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? devikinData.ForAffinity : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Agility: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? devikinData.AgiAffinity : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Sanity: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? devikinData.SanAffinity : '???' }}</span>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="column">
+                      <ul>
+                          <li class="li-header">
+                              <span class="subtitle is-size-4">Base Attributes</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Vitality: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? devikinData.VitBase : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Power: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? devikinData.PowBase : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Fortitude: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? devikinData.ForBase : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Agility: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? devikinData.AgiBase : '???' }}</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Sanity: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? devikinData.SanBase : '???' }}</span>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+    </div>
+    <footer class="footer">
+        <div class="columns">
+                <div class="column">
+                    Devitext by Evil Slime of <a href="https://discord.gg/Y25fxGjj">The Nightcrawlers Guild</a>
+                    <h4 class="mt-5">
+                        <strong>Donate</strong>
+                    </h4>
+                    <a href="https://buymeacoffee.com/evilslime" target="_blank" class="button is-primary" style="margin-top: 10px;">
+                        <span class="icon">
+                            <img src="https://media.giphy.com/media/TDQOtnWgsBx99cNoyH/giphy.gif" alt="" height="50" width="50">
+                        </span>
+                        <span>Buy me a coffee</span>
+                    </a>
+                </div>
+                <div class="column">
+                    <h4>
+                        <strong>Alrights reserved to their respectives owners</strong>
+                    </h4>
+                    <ul>
+                        <li>
+                          <a href="https://klevernft.com/" target="_blank">Klever NFT</a>
+                        </li>
+                        <li>
+                          <a href="https://moonlabs.com/" target="_blank">Moonlabs</a>
+                        </li>
+                        <li>
+                          <a href="https://devikins.com/" target="_blank">Devikins</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h4>
+                        <strong>Social Media</strong>
+                    </h4>
+                    <ul>
+                        <li>
+                          <a href="https://www.facebook.com/groups/devikinspilipinas" target="_blank">Devikins Pilipinas</a>
+                        </li>
+                        <li>
+                          <a href="https://discord.gg/Y25fxGjj" target="_blank">Join The Nightcrawlers Guild</a>
+                        </li>
+                        <li>
+                          <a href="https://discord.gg/devikins" target="_blank">Devikins Discord Server</a>
+                        </li>
+                        <li>
+                          <a href="https://www.facebook.com/groups/devikinsgame/" target="_blank">Devikins Facebook Page</a>
+                        </li>
+                        <li>
+                          <a href="https://twitter.com/devikins_game" target="_blank">Devikins at Twitter</a>
+                        </li>
+                        <li>
+                          <a href="https://devikins-game.medium.com/" target="_blank">Devikins Medium</a>
+                        </li>
+                        <li>
+                          <a href="https://t.me/devikins_game" target="_blank">Devikins Telegram</a>
+                        </li>
+                        <li>
+                          <a href="https://nightcrawlers-guild.gitbook.io/devikins/" target="_blank">Devikins Unofficial Guide by The Nightcrawlers Guild</a>
+                        </li>
+                    </ul>
+                </div>
+        </div>
+    </footer>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                devikinId: '',
+                devikinData: null,
+                devikinBasicInformation: {
+                    rarity: null,
+                    personality: null,
+                    ancestry: null,
+                    lifeStage: null,
+                    bonded: null,
+                    isHardminted: null,
+                },
+                limitedHats: [
+                    {name: 'Mysth', description : 'Witch Hat'},
+                    {name: 'Scappy', description: 'Miner Hat'}
+                ],
+                devikinGenes: ['Dominant', 'Co-Dominant', 'Recessive', 'Bonded', 'Unique']
+            },
+            methods: {
+                search: function () {
+                    fetch('https://inventory.api.devikins.com/asset/' + this.devikinId) //727551 284275
+                      .then(response => response.json())
+                      .then(data => {
+                          this.devikinData = data
+                          console.log(data);
+                          this.setDevikinRarity()
+                          this.setDevikinPersonality()
+                          this.setDevikinAncestry()
+                          this.setDevikinLifeStage()
+                          this.setDevikinHardmintStatus()
+                          this.setDevikinBondedStatus()
+                      })
+                },
+                setDevikinRarity: function () {
+                    rarity = this.devikinData.Rarity
+
+                    if (rarity == 0) {
+                        this.devikinBasicInformation.rarity = 'Uncommon'
+                    } else if (rarity == 1) {
+                        this.devikinBasicInformation.rarity = 'Rare'
+                    } else if (rarity == 2) {
+                        this.devikinBasicInformation.rarity = 'Mythic'
+                    } else if (rarity == undefined) {
+                        this.devikinBasicInformation.rarity = 'Common'
+                    }
+                },
+                setDevikinPersonality: function () {
+                    personality = this.devikinData.Personality
+
+                    switch (personality) {
+                        case 1:
+                            this.devikinBasicInformation.personality = 'Angry'
+                            break;
+                        case 2:
+                            this.devikinBasicInformation.personality = 'Curious'
+                            break;
+                        case 3:
+                            this.devikinBasicInformation.personality = 'Feisty'
+                            break;
+                        case 4:
+                            this.devikinBasicInformation.personality = 'Nerdy'
+                            break;
+                        case 5:
+                            this.devikinBasicInformation.personality = 'Polite'
+                            break;
+                        case 6:
+                            this.devikinBasicInformation.personality = 'Reckless'
+                            break;
+                        case 7:
+                            this.devikinBasicInformation.personality = 'Resilient'
+                            break;
+                        case 8:
+                            this.devikinBasicInformation.personality = 'Sassy'
+                            break;
+                        case 9:
+                            this.devikinBasicInformation.personality = 'Shy'
+                            break;
+                        case 10:
+                            this.devikinBasicInformation.personality = 'Stoic'
+                            break;
+                        case 11:
+                            this.devikinBasicInformation.personality = 'Klever'
+                            break;
+                        case 12:
+                            this.devikinBasicInformation.personality = 'Lavish'
+                            break;
+                        case 13:
+                            this.devikinBasicInformation.personality = 'Miner'
+                            break;
+                        case 14:
+                            this.devikinBasicInformation.personality = 'Glitched'
+                            break;
+
+                        default:
+                            break;
+                    }
+                },
+                setDevikinAncestry: function () {
+                    ancestry = this.devikinData.AncestryType
+
+                    switch (ancestry) {
+                        case 1:
+                            this.devikinBasicInformation.ancestry = 'Lunarian'
+                            break;
+                        case 2:
+                            this.devikinBasicInformation.ancestry = 'Ochran'
+                            break;
+                        case 3:
+                            this.devikinBasicInformation.ancestry = 'Glyesian'
+                            break;
+                        case 4:
+                            this.devikinBasicInformation.ancestry = 'Maarish'
+                            break;
+                        case 5:
+                            this.devikinBasicInformation.ancestry = 'Khoroth'
+                            break;
+
+                        default:
+                            break;
+                    }
+                },
+                setDevikinLifeStage: function () {
+                    rarity = this.devikinData.Stage
+
+                    switch (0) {
+                        case 0:
+                            this.devikinBasicInformation.lifeStage = 'Embryo'
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                },
+                setDevikinHardmintStatus: function () {
+                    this.devikinData.IsHardMinted? 
+                        this.devikinBasicInformation.isHardminted = 'Yes' : 
+                        this.devikinBasicInformation.isHardminted = 'No'
+                },
+                setDevikinBondedStatus: function () {
+                    bonded = this.devikinData.Set
+                    
+                    if (bonded == undefined) {
+                        this.devikinBasicInformation.bonded = 'No'
+                    } else if (bonded instanceof Object) {
+                        this.devikinBasicInformation.bonded = bonded.Name
+                    }
+                },
+                getDevikinGene: function (gene) {
+                    if (this.devikinData.Set) {
+                        return this.devikinGenes[3]
+                    } else {
+                        if (gene == 'Mouth') {
+                        return this.devikinGenes[this.devikinData.Mouth.Tag]
+                        }
+
+                        if (gene == 'Eyes') {
+                        return this.devikinGenes[this.devikinData.Eyes.Tag]
+                        }
+
+                        if (gene == 'Ears') {
+                        return this.devikinGenes[this.devikinData.Ears.Tag]
+                        }
+
+                        if (gene == 'Hair') {
+                        return this.devikinGenes[this.devikinData.Hair.Tag]
+                        }
+
+                        if (gene == 'Horns') {
+                        return this.devikinGenes[this.devikinData.Horns.Tag]
+                        }
+                    }
+                },
+                getDevikinLimitedHat: function () {
+                    if (this.devikinData.Set) {
+                        return 'No'
+                    } else {
+                        for (const hat of this.limitedHats) {
+                            if (hat.name == this.devikinData.Hair.Name) {
+                                return hat.description
+                            }
+                        }
+
+                        return 'No'
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
