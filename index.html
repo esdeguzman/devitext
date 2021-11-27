@@ -33,6 +33,10 @@
                               <span class="subtitle is-size-4">Basic Information</span>
                           </li>
                           <li>
+                              <span class="title is-size-4">Overall Affinity: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? devikinData.OverallAffinity : '???' }}</span>
+                          </li>
+                          <li>
                               <span class="title is-size-4">Rarity: </span>
                               <span class="subtitle is-size-4">{{ devikinBasicInformation.rarity? devikinBasicInformation.rarity : '???' }}</span>
                           </li>
@@ -245,15 +249,17 @@
                       })
                 },
                 setDevikinRarity: function () {
-                    rarity = this.devikinData.Rarity
+                    overallAffinity = this.devikinData.OverallAffinity
 
-                    if (rarity == 0) {
+                    if (overallAffinity <= 29) {
                         this.devikinBasicInformation.rarity = 'Uncommon'
-                    } else if (rarity == 1) {
+                    } else if (overallAffinity >= 30 || overallAffinity <= 34) {
                         this.devikinBasicInformation.rarity = 'Rare'
-                    } else if (rarity == 2) {
+                    } else if (overallAffinity >= 35 || overallAffinity <= 40) {
                         this.devikinBasicInformation.rarity = 'Mythic'
-                    } else if (rarity == undefined) {
+                    } else if (overallAffinity >= 41 || overallAffinity <= 49) {
+                        this.devikinBasicInformation.rarity = 'Common'
+                    } else if (overallAffinity == 50) {
                         this.devikinBasicInformation.rarity = 'Common'
                     }
                 },
