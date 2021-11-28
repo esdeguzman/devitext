@@ -231,6 +231,12 @@
                     {name: 'Mysth', description : 'Witch Hat'},
                     {name: 'Scappy', description: 'Miner Hat'}
                 ],
+                bondedGenes: [
+                    {name: 'Klever', description: 'Ninja'},
+                    {name: 'Froday', description: 'Jason'},
+                    {name: 'Glub', description: 'Turkey Head'},
+                    {name: 'ARM', description: 'Sergio'},
+                ],
                 devikinGenes: ['Dominant', 'Co-Dominant', 'Recessive', 'Bonded', 'Unique']
             },
             methods: {
@@ -361,7 +367,12 @@
                     if (bonded == undefined) {
                         this.devikinBasicInformation.bonded = 'No'
                     } else if (bonded instanceof Object) {
-                        this.devikinBasicInformation.bonded = bonded.Name
+                        for (let index = 0; index < this.bondedGenes.length; index++) {
+                            if (this.bondedGenes[index].name == bonded.Name) {
+                                this.devikinBasicInformation.bonded = this.bondedGenes[index].description
+                                break
+                            }
+                        }
                     }
                 },
                 getDevikinGene: function (gene) {
