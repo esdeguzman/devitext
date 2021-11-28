@@ -33,6 +33,10 @@
                               <span class="subtitle is-size-4">Basic Information</span>
                           </li>
                           <li>
+                              <span class="title is-size-4">Devikin ID: </span>
+                              <span class="subtitle is-size-4">{{ devikinData? devikinData.SequenceCounter : '???' }}</span>
+                          </li>
+                          <li>
                               <span class="title is-size-4">Overall Affinity: </span>
                               <span class="subtitle is-size-4">{{ devikinData? devikinData.OverallAffinity : '???' }}</span>
                           </li>
@@ -269,6 +273,7 @@
                           }
                       })
                       .then(data => {
+                          this.resetSearch()
                           this.devikinData = data
                           this.setDevikinRarity()
                           this.setDevikinPersonality()
