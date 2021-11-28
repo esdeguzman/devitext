@@ -231,7 +231,29 @@
                     {name: 'Mysth', description : 'Witch Hat'},
                     {name: 'Scappy', description: 'Miner Hat'}
                 ],
-                devikinGenes: ['Dominant', 'Co-Dominant', 'Recessive', 'Bonded', 'Unique']
+                bondedGenes: [
+                    {name: 'Klever', description: 'Ninja'},
+                    {name: 'Froday', description: 'Jason'},
+                    {name: 'Glub', description: 'Turkey Head'},
+                    {name: 'ARM', description: 'Sergio'},
+                ],
+                devikinGenes: ['Dominant', 'Co-Dominant', 'Recessive', 'Bonded', 'Unique'],
+                personalities: [
+                    {name: 'Angry', bonus: '+1 Power, +1 Agility'},
+                    {name: 'Curious', bonus: '+1 Agility, +1 Sanity'},
+                    {name: 'Feisty', bonus: '+2 Power'},
+                    {name: 'Nerdy', bonus: '+2 Fortitude'},
+                    {name: 'Polite', bonus: '+1 Vitality, +1 Fortitude'},
+                    {name: 'Reckless', bonus: '+1 Fortitude, +1 Sanity'},
+                    {name: 'Resilient', bonus: '+1 Vitality, +1 Power'},
+                    {name: 'Sassy', bonus: '+2 Agility'},
+                    {name: 'Shy', bonus: '+2 Vitality'},
+                    {name: 'Stoic', bonus: '+2 Sanity'},
+                    {name: 'Klever', bonus: '+1 all affinities'},
+                    {name: 'Lavish', bonus: '+2 Vitality, +1 Fortitude'},
+                    {name: 'Miner', bonus: '+2 Power, +1 Agility'},
+                    {name: 'Glitched', bonus: '+3 Sanity'},
+                ]
             },
             methods: {
                 search: function () {
@@ -239,7 +261,6 @@
                       .then(response => response.json())
                       .then(data => {
                           this.devikinData = data
-                          console.log(data);
                           this.setDevikinRarity()
                           this.setDevikinPersonality()
                           this.setDevikinAncestry()
@@ -254,64 +275,24 @@
                     if (overallAffinity <= 29) {
                         this.devikinBasicInformation.rarity = 'Uncommon'
                     } else if (overallAffinity >= 30 || overallAffinity <= 34) {
-                        this.devikinBasicInformation.rarity = 'Rare'
+                        this.devikinBasicInformation.rarity = 'Common'
                     } else if (overallAffinity >= 35 || overallAffinity <= 40) {
-                        this.devikinBasicInformation.rarity = 'Mythic'
+                        this.devikinBasicInformation.rarity = 'Rare'
                     } else if (overallAffinity >= 41 || overallAffinity <= 49) {
-                        this.devikinBasicInformation.rarity = 'Common'
+                        this.devikinBasicInformation.rarity = 'Mythic'
                     } else if (overallAffinity == 50) {
-                        this.devikinBasicInformation.rarity = 'Common'
+                        this.devikinBasicInformation.rarity = 'Eldritch'
                     }
                 },
                 setDevikinPersonality: function () {
                     personality = this.devikinData.Personality
+                    personality == 0? personality = 0 : personality -= 1
 
-                    switch (personality) {
-                        case 1:
-                            this.devikinBasicInformation.personality = 'Angry'
-                            break;
-                        case 2:
-                            this.devikinBasicInformation.personality = 'Curious'
-                            break;
-                        case 3:
-                            this.devikinBasicInformation.personality = 'Feisty'
-                            break;
-                        case 4:
-                            this.devikinBasicInformation.personality = 'Nerdy'
-                            break;
-                        case 5:
-                            this.devikinBasicInformation.personality = 'Polite'
-                            break;
-                        case 6:
-                            this.devikinBasicInformation.personality = 'Reckless'
-                            break;
-                        case 7:
-                            this.devikinBasicInformation.personality = 'Resilient'
-                            break;
-                        case 8:
-                            this.devikinBasicInformation.personality = 'Sassy'
-                            break;
-                        case 9:
-                            this.devikinBasicInformation.personality = 'Shy'
-                            break;
-                        case 10:
-                            this.devikinBasicInformation.personality = 'Stoic'
-                            break;
-                        case 11:
-                            this.devikinBasicInformation.personality = 'Klever'
-                            break;
-                        case 12:
-                            this.devikinBasicInformation.personality = 'Lavish'
-                            break;
-                        case 13:
-                            this.devikinBasicInformation.personality = 'Miner'
-                            break;
-                        case 14:
-                            this.devikinBasicInformation.personality = 'Glitched'
-                            break;
-
-                        default:
-                            break;
+                    for (let index = 0; index < this.personalities.length; index++) {
+                        if (index == personality) {
+                            this.devikinBasicInformation.personality = this.personalities[index].name + ' (' + this.personalities[index].bonus + ')'
+                            break
+                        }
                     }
                 },
                 setDevikinAncestry: function () {
@@ -361,7 +342,12 @@
                     if (bonded == undefined) {
                         this.devikinBasicInformation.bonded = 'No'
                     } else if (bonded instanceof Object) {
-                        this.devikinBasicInformation.bonded = bonded.Name
+                        for (let index = 0; index < this.bondedGenes.length; index++) {
+                            if (this.bondedGenes[index].name == bonded.Name) {
+                                this.devikinBasicInformation.bonded = this.bondedGenes[index].description
+                                break
+                            }
+                        }
                     }
                 },
                 getDevikinGene: function (gene) {
