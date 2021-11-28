@@ -237,7 +237,23 @@
                     {name: 'Glub', description: 'Turkey Head'},
                     {name: 'ARM', description: 'Sergio'},
                 ],
-                devikinGenes: ['Dominant', 'Co-Dominant', 'Recessive', 'Bonded', 'Unique']
+                devikinGenes: ['Dominant', 'Co-Dominant', 'Recessive', 'Bonded', 'Unique'],
+                personalities: [
+                    {name: 'Angry', bonus: '+1 Power, +1 Agility'},
+                    {name: 'Curious', bonus: '+1 Agility, +1 Sanity'},
+                    {name: 'Feisty', bonus: '+2 Power'},
+                    {name: 'Nerdy', bonus: '+2 Fortitude'},
+                    {name: 'Polite', bonus: '+1 Vitality, +1 Fortitude'},
+                    {name: 'Reckless', bonus: '+1 Fortitude, +1 Sanity'},
+                    {name: 'Resilient', bonus: '+1 Vitality, +1 Power'},
+                    {name: 'Sassy', bonus: '+2 Agility'},
+                    {name: 'Shy', bonus: '+2 Vitality'},
+                    {name: 'Stoic', bonus: '+2 Sanity'},
+                    {name: 'Klever', bonus: '+1 all affinities'},
+                    {name: 'Lavish', bonus: '+2 Vitality, +1 Fortitude'},
+                    {name: 'Miner', bonus: '+2 Power, +1 Agility'},
+                    {name: 'Glitched', bonus: '+3 Sanity'},
+                ]
             },
             methods: {
                 search: function () {
@@ -270,53 +286,13 @@
                 },
                 setDevikinPersonality: function () {
                     personality = this.devikinData.Personality
+                    personality == 0? personality = 0 : personality -= 1
 
-                    switch (personality) {
-                        case 1:
-                            this.devikinBasicInformation.personality = 'Angry'
-                            break;
-                        case 2:
-                            this.devikinBasicInformation.personality = 'Curious'
-                            break;
-                        case 3:
-                            this.devikinBasicInformation.personality = 'Feisty'
-                            break;
-                        case 4:
-                            this.devikinBasicInformation.personality = 'Nerdy'
-                            break;
-                        case 5:
-                            this.devikinBasicInformation.personality = 'Polite'
-                            break;
-                        case 6:
-                            this.devikinBasicInformation.personality = 'Reckless'
-                            break;
-                        case 7:
-                            this.devikinBasicInformation.personality = 'Resilient'
-                            break;
-                        case 8:
-                            this.devikinBasicInformation.personality = 'Sassy'
-                            break;
-                        case 9:
-                            this.devikinBasicInformation.personality = 'Shy'
-                            break;
-                        case 10:
-                            this.devikinBasicInformation.personality = 'Stoic'
-                            break;
-                        case 11:
-                            this.devikinBasicInformation.personality = 'Klever'
-                            break;
-                        case 12:
-                            this.devikinBasicInformation.personality = 'Lavish'
-                            break;
-                        case 13:
-                            this.devikinBasicInformation.personality = 'Miner'
-                            break;
-                        case 14:
-                            this.devikinBasicInformation.personality = 'Glitched'
-                            break;
-
-                        default:
-                            break;
+                    for (let index = 0; index < this.personalities.length; index++) {
+                        if (index == personality) {
+                            this.devikinBasicInformation.personality = this.personalities[index].name + ' (' + this.personalities[index].bonus + ')'
+                            break
+                        }
                     }
                 },
                 setDevikinAncestry: function () {
