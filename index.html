@@ -449,6 +449,10 @@
                     } else if (this.devikinData.SanAffinity == 10 && this.perfectAffinities == null) {
                         this.perfectAffinities = 'Sanity'
                     }
+
+                    if (this.perfectAffinities == null) {
+                        this.perfectAffinities = 'None'
+                    }
                 },
                 resetSearch: function () {
                     this.devikinId = null
