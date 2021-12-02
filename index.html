@@ -56,6 +56,17 @@
                               <span class="title is-size-4">Life Stage: </span>
                               <span class="subtitle is-size-4">{{ devikinBasicInformation.lifeStage? devikinBasicInformation.lifeStage : '???' }}</span>
                           </li>
+                      </ul>
+                  </div>
+                  <div class="column">
+                      <ul>
+                          <li class="li-header">
+                              <span class="subtitle is-size-4">Special Traits</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Perfect Affinities: </span>
+                              <span class="subtitle is-size-4">{{ perfectAffinities? perfectAffinities : '???' }}</span>
+                          </li>
                           <li>
                               <span class="title is-size-4">Bonded: </span>
                               <span class="subtitle is-size-4">{{ devikinBasicInformation.bonded? devikinBasicInformation.bonded : '???' }}</span>
@@ -260,7 +271,8 @@
                     {name: 'Lavish', bonus: '+2 Vitality, +1 Fortitude'},
                     {name: 'Miner', bonus: '+2 Power, +1 Agility'},
                     {name: 'Glitched', bonus: '+3 Sanity'},
-                ]
+                ],
+                perfectAffinities: null,
             },
             methods: {
                 search: function () {
@@ -281,6 +293,7 @@
                           this.setDevikinLifeStage()
                           this.setDevikinHardmintStatus()
                           this.setDevikinBondedStatus()
+                          this.setPerfectAffinities()
                       })
                       .catch((error) => {
                           alert('An unexpected error occured. Please try searching another one.')
@@ -404,6 +417,37 @@
                         }
 
                         return 'No'
+                    }
+                },
+                setPerfectAffinities: function () {
+                    if (this.devikinData.VitAffinity == 10 && this.perfectAffinities != null) {
+                        this.perfectAffinities += ', Vitality'
+                    } else if (this.devikinData.VitAffinity == 10 && this.perfectAffinities == null) {
+                        this.perfectAffinities = 'Vitality'
+                    }
+
+                    if (this.devikinData.PowAffinity == 10 && this.perfectAffinities != null) {
+                        this.perfectAffinities += ', Power'
+                    } else if (this.devikinData.PowAffinity == 10 && this.perfectAffinities == null) {
+                        this.perfectAffinities = 'Power'
+                    }
+
+                    if (this.devikinData.ForAffinity == 10 && this.perfectAffinities != null) {
+                        this.perfectAffinities += ', Fortitude'
+                    } else if (this.devikinData.ForAffinity == 10 && this.perfectAffinities == null) {
+                        this.perfectAffinities = 'Fortitude'
+                    }
+
+                    if (this.devikinData.AgiAffinity == 10 && this.perfectAffinities != null) {
+                        this.perfectAffinities += ', Agility'
+                    } else if (this.devikinData.AgiAffinity == 10 && this.perfectAffinities == null) {
+                        this.perfectAffinities = 'Agility'
+                    }
+
+                    if (this.devikinData.SanAffinity == 10 && this.perfectAffinities != null) {
+                        this.perfectAffinities += ', Sanity'
+                    } else if (this.devikinData.SanAffinity == 10 && this.perfectAffinities == null) {
+                        this.perfectAffinities = 'Sanity'
                     }
                 },
                 resetSearch: function () {
