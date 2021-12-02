@@ -7,7 +7,7 @@
     <title>Devitext</title>
     <link rel="icon" href="favicon-96x96.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link rel="stylesheet" href="main.css">
 </head>
@@ -19,7 +19,7 @@
                 Devitext
               </p>
               <p class="subtitle">
-                Text base Devikin search for your quick NFT view.
+                A text base fantool Devikin search for your quick NFT view.
               </p>
               <input type="text" class="input" placeholder="Type Devikin ID here" v-model="devikinId" id="devikinId">
               <button class="button mt-2" @click="search" :disabled="!hasInput">Search</button>
@@ -55,6 +55,17 @@
                           <li>
                               <span class="title is-size-4">Life Stage: </span>
                               <span class="subtitle is-size-4">{{ devikinBasicInformation.lifeStage? devikinBasicInformation.lifeStage : '???' }}</span>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="column">
+                      <ul>
+                          <li class="li-header">
+                              <span class="subtitle is-size-4">Special Traits</span>
+                          </li>
+                          <li>
+                              <span class="title is-size-4">Perfect Affinities: </span>
+                              <span class="subtitle is-size-4">{{ perfectAffinities? perfectAffinities : '???' }}</span>
                           </li>
                           <li>
                               <span class="title is-size-4">Bonded: </span>
@@ -260,7 +271,8 @@
                     {name: 'Lavish', bonus: '+2 Vitality, +1 Fortitude'},
                     {name: 'Miner', bonus: '+2 Power, +1 Agility'},
                     {name: 'Glitched', bonus: '+3 Sanity'},
-                ]
+                ],
+                perfectAffinities: null,
             },
             methods: {
                 search: function () {
@@ -281,6 +293,7 @@
                           this.setDevikinLifeStage()
                           this.setDevikinHardmintStatus()
                           this.setDevikinBondedStatus()
+                          this.setPerfectAffinities()
                       })
                       .catch((error) => {
                           alert('An unexpected error occured. Please try searching another one.')
@@ -404,6 +417,37 @@
                         }
 
                         return 'No'
+                    }
+                },
+                setPerfectAffinities: function () {
+                    if (this.devikinData.VitAffinity == 10 && this.perfectAffinities != null) {
+                        this.perfectAffinities += ', Vitality'
+                    } else if (this.devikinData.VitAffinity == 10 && this.perfectAffinities == null) {
+                        this.perfectAffinities = 'Vitality'
+                    }
+
+                    if (this.devikinData.PowAffinity == 10 && this.perfectAffinities != null) {
+                        this.perfectAffinities += ', Power'
+                    } else if (this.devikinData.PowAffinity == 10 && this.perfectAffinities == null) {
+                        this.perfectAffinities = 'Power'
+                    }
+
+                    if (this.devikinData.ForAffinity == 10 && this.perfectAffinities != null) {
+                        this.perfectAffinities += ', Fortitude'
+                    } else if (this.devikinData.ForAffinity == 10 && this.perfectAffinities == null) {
+                        this.perfectAffinities = 'Fortitude'
+                    }
+
+                    if (this.devikinData.AgiAffinity == 10 && this.perfectAffinities != null) {
+                        this.perfectAffinities += ', Agility'
+                    } else if (this.devikinData.AgiAffinity == 10 && this.perfectAffinities == null) {
+                        this.perfectAffinities = 'Agility'
+                    }
+
+                    if (this.devikinData.SanAffinity == 10 && this.perfectAffinities != null) {
+                        this.perfectAffinities += ', Sanity'
+                    } else if (this.devikinData.SanAffinity == 10 && this.perfectAffinities == null) {
+                        this.perfectAffinities = 'Sanity'
                     }
                 },
                 resetSearch: function () {
