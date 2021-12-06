@@ -2,9 +2,11 @@
   <div>
     <section class="hero is-link">
       <div class="hero-body">
-        <p class="title">
-          Devitext
-        </p>
+        <span class="title">Devitext</span>
+        <a class="is-pulled-right" href="#" @click="viewPatches">
+          <strong>Patches&nbsp;</strong>
+          <span class="tag is-success">new</span>
+        </a>
         <p class="subtitle">
           A text base fantool Devikin search for your quick NFT view.
         </p>
@@ -31,6 +33,7 @@
         </div>
       </div>
     </div>
+    <Updates :bus="bus" />
   </div>
 </template>
 
@@ -38,6 +41,7 @@
 import BasicInformation from './components/BasicInformation.vue'
 import SpecialTraits from './components/SpecialTraits.vue'
 import Genes from './components/Genes.vue'
+import Updates from './components/Updates.vue'
 import Affinities from './components/Affinities.vue'
 import BaseAttributes from './components/BaseAttributes.vue'
 import Vue from '../node_modules/vue'
@@ -49,7 +53,8 @@ export default {
     SpecialTraits,
     Genes,
     Affinities,
-    BaseAttributes
+    BaseAttributes,
+    Updates
   },
   mounted() {
       this.resetSearch()
@@ -59,7 +64,8 @@ export default {
       devikinId: '',
       devikinData: {},
       perfectAffinities: null,
-      bus: new Vue()
+      bus: new Vue(),
+      updateShown: false
     }
   },
   methods: {
@@ -85,6 +91,9 @@ export default {
           this.devikinId = null
           this.bus.$emit('search-reset')
           document.getElementById('devikinId').focus()
+      },
+      viewPatches: function () {
+        this.bus.$emit('view-patches')
       }
   },
   computed: {
