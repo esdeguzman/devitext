@@ -27,6 +27,9 @@
         <span class="title is-size-4">Life Stage: </span>
         <span class="subtitle is-size-4">{{ devikinBasicInformation.lifeStage? devikinBasicInformation.lifeStage : '???' }}</span>
     </li>
+    <li class="pt-2" v-if="devikinBasicInformation.id">
+       <a :href="nftLink" class="button is-link is-uppercase has-text-weight-bold" target="_blank">view nft at klevernft.com</a>
+    </li>
   </ul>
 </template>
 
@@ -44,6 +47,7 @@ export default {
           this.setDevikinLifeStage()
           this.devikinBasicInformation.overallAffinity = this.devikinData.OverallAffinity
           this.devikinBasicInformation.id = this.devikinData.SequenceCounter
+          this.nftLink = 'https://klevernft.com/asset/' + this.devikinBasicInformation.id
       } 
   },
   data() {
@@ -55,6 +59,7 @@ export default {
           personality: null,
           ancestry: null,
           lifeStage: null,
+          nftLink: null
       },
       personalities: [
           {name: 'Angry', bonus: '+1 Power, +1 Agility'},
