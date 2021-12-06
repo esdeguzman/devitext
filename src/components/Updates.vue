@@ -7,10 +7,35 @@
             <button class="delete" aria-label="close" @click="closeModal"></button>
             </header>
             <section class="modal-card-body">
-            <!-- Content ... -->
+                <div v-for="update in updates" :key="update.id">
+                    <p class="has-text-weight-bold mb-2">Date: {{ update.date }}</p>
+                    <ul>
+                        <li v-for="entry in update.entries" :key="entry.id" class="mb-1">
+                            <span class="title is-size-6">{{ entry.name }}</span><br>
+                            <span class="subtitle is-size-6">{{ entry.description }}</span>
+                        </li>
+                    </ul>
+                    <hr>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <h4>
+                        <strong>Donate</strong>
+                        </h4>
+                        <a href="https://buymeacoffee.com/evilslime" target="_blank" class="button is-primary" style="margin-top: 10px;">
+                            <span class="icon">
+                                <img src="https://media.giphy.com/media/TDQOtnWgsBx99cNoyH/giphy.gif" alt="" height="50" width="50">
+                            </span>
+                            <span>Buy me a coffee</span>
+                        </a>
+                    </div>
+                    <div class="column is-two-thirds">
+                        <p>Your donation will be used for the site's maintenance like its monthly hosting, domain fees, etc.</p>
+                    </div>
+                </div>
             </section>
             <footer class="modal-card-foot">
-            <button class="button is-link is-pulled-right" @click="closeModal">Cool!</button>
+            <button class="button is-link" @click="closeModal">Cool!</button>
             </footer>
         </div>
     </div>
@@ -53,11 +78,11 @@ export default {
                 ]
             },
             {
-                name: 'Devitext Version 2.0',
+                date: 'December 03, 2021',
                 entries: [
                     {
-                        date: 'December 03, 2021',
-                        description: 'Code has been overhauled to VueJS components! Site\'s performance should slightly be boosted and more manageable source code for me :).'
+                        name: 'Devitext Version 2.0',
+                        description: 'Code has been migrated to VueJS components! Site\'s performance should slightly be boosted and more manageable source code for me :).'
                     }
                 ]
             }
