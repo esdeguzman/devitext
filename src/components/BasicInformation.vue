@@ -46,7 +46,7 @@ export default {
           this.setDevikinAncestry()
           this.setDevikinLifeStage()
           this.devikinBasicInformation.overallAffinity = this.devikinData.OverallAffinity
-          this.devikinBasicInformation.id = this.devikinData.SequenceCounter
+          this.devikinBasicInformation.id = this.devikinData.SequenceCounter? this.devikinData.SequenceCounter : '0'
           this.nftLink = 'https://klevernft.com/asset/' + this.devikinBasicInformation.id
       } 
   },
